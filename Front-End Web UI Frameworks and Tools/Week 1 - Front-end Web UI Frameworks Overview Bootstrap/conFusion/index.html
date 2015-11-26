@@ -25,16 +25,23 @@
 
 <body>
 
-  <div>test!</div>
-
-  <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
           <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Ristorante Con Fusion</a>
+            </div>
             <div id="navbar" class="navbar-collapse collapse">
-              <ul class="nav navbar-nav">
-                <li class="active"><a href="#"><span class="glyphicon glyphicon-home"
-                       aria-hidden="true"></span> Home</a></li>
-                  <li><a href="#">About</a></li>
-                  <li class="dropdown">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="index.html"><span class="glyphicon glyphicon-home"
+                         aria-hidden="true"></span> Home</a></li>
+                    <li><a href="aboutus.html"><span class="glyphicon glyphicon-info-sign"></span> About</a></li>
+                    <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"
                          role="button" aria-haspopup="true" aria-expanded="false">
                          Menu <span class="caret"></span></a>
@@ -48,20 +55,11 @@
                             <li><a href="#">Lunch Buffet</a></li>
                             <li><a href="#">Weekend Brunch</a></li>
                         </ul>
-                     </li>
-                  <li><a href="#">Contact</a></li>
-              </ul>
+                    </li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
             </div>
           </div>
-          <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">Ristorante Con Fusion</a>
-                </div>
       </nav>
 
     <header class="jumbotron">
