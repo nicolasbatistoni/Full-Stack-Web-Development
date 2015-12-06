@@ -23,7 +23,7 @@
     <![endif]-->
 </head>
 
-<body>
+<body data-spy="scroll" data-target="#myScrollspy" data-offset="200">
   <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
           <div class="container">
             <div class="navbar-header">
@@ -102,7 +102,9 @@
     </header>
 
     <div class="container">
-        <div class="row">
+      <div class="row">
+        <div class="col-xs-12 col-sm-10">
+          <div class="row">
             <div  class="col-xs-12">
               <ol class="breadcrumb">
                 <li><a href="index.html">Home</a></li>
@@ -113,9 +115,9 @@
                <h3>About Us</h3>
                <hr>
             </div>
-        </div>
+          </div>
 
-        <div class="row row-content">
+          <div id="history" class="row row-content">
             <div class="col-xs-12 col-sm-6 col-lg-8">
                 <h2>Our History</h2>
                 <p>
@@ -133,9 +135,25 @@
                   Pan, that featured for the first time the world's best
                   cuisines in a pan.
                 </p>
+                <div class="well">
+                  <blockquote>
+                    <p>
+                      You better cut the pizza in four pieces because
+                      I'm not hungry enough to eat six.
+                    </p>
+                    <footer>
+                      Yogi Berra,
+                      <cite>
+                        The Wit and Wisdom of Yogi Berra,
+                        P. Pepe, Diversion Books, 2014
+                      </cite>
+                    </footer>
+                  </blockquote>
+                </div>
             </div>
             <div class="col-xs-12 col-sm-6 col-lg-4">
-               <p style="padding:20px;"></p>
+
+              <p style="padding:20px;"></p>
                <div class="panel panel-primary">
                    <div class="panel-heading">
                        <h3 class="panel-title">Facts At a Glance</h3>
@@ -153,11 +171,11 @@
                       </dl>
                    </div>
                </div>
-           </div>
-        </div>
+            </div>
+         </div>
 
 
-        <div class="row row-content">
+        <div id="corporate" class="row row-content">
             <div class="col-xs-12">
                 <h2>Corporate Leadership</h2>
                 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -255,7 +273,7 @@
           </div>
        </div>
 
-       <div class="row row-content">
+       <div id="facts" class="row row-content">
             <div class="col-xs-12">
                 <h2>Facts &amp; Figures</h2>
                 <div class="table-responsive">
@@ -294,19 +312,15 @@
                 </div>
             </div>
        </div>
-
-       <div class="well">
-                    <blockquote>
-                        <p>You better cut the pizza in four pieces because
-                            I'm not hungry enough to eat six.</p>
-                        <footer>Yogi Berra,
-                          <cite>The Wit and Wisdom of Yogi Berra,
-                            P. Pepe, Diversion Books, 2014</cite>
-                        </footer>
-                    </blockquote>
-                </div>
-
     </div>
+    <nav class="hidden-xs col-sm-2" id="myScrollspy">
+          <ul class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="400">
+              <li><a href="#history">Our History</a></li>
+              <li><a href="#corporate">Corporate</a></li>
+              <li><a href="#facts">Facts</a></li>
+          </ul>
+      </nav>
+  </div>
 
     <footer class="row-footer">
         <div class="container">
