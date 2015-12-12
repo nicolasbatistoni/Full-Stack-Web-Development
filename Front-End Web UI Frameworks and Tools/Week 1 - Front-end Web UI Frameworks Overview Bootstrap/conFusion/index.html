@@ -59,7 +59,8 @@
                     <li><a href="contactus.html"><i class="fa fa-envelope-o"></i> Contact</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a data-toggle="modal" data-target="#loginModal">
+                    <!--<li><a data-toggle="modal" data-target="#loginModal">-->
+                    <li><a id="loginBtn" class="btn btn-link" style="height:50px">
                     <span class="glyphicon glyphicon-log-in"></span> Login</a>
                     </li>
                 </ul>
@@ -67,6 +68,7 @@
 
           </div>
       </nav>
+
       <div id="loginModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
         <!-- Modal content-->
@@ -177,8 +179,9 @@
                 </div>
                 <div class="col-xs-6 col-sm-2">
                   <p style="padding:40px;"></p>
-                  <a type="button" class="btn btn-warning btn-block"
-                    data-toggle="modal" data-target="#reserveform">Reserve Table<a/>
+                  <!--<a type="button" class="btn btn-warning btn-block"
+                    data-toggle="modal" data-target="#reserveform">Reserve Table<a/>-->
+                    <a id="reserveBtn" type="button" class="btn btn-warning btn-block">Reserve Table<a/>
                 </div>
             </div>
         </div>
@@ -435,6 +438,12 @@
         });
         $("#carousel-play").click(function(){
           $("#mycarousel").carousel('cycle');
+        });
+        $("#reserveBtn").click(function(){
+          $("#reserveform").modal();
+        });
+        $("#loginBtn").click(function(){
+          $("#loginModal").modal();
         });
       });
     </script>
