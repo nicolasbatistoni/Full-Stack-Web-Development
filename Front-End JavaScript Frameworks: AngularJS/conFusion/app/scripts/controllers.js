@@ -9,18 +9,14 @@ angular.module('confusionApp')
             $scope.showDetails = false;
             $scope.showMenu = false;
             $scope.message = "Loading ...";
-            $scope.dishes= {};
-
-            menuFactory.getDishes()
-            .then(
+            menuFactory.getDishes().query(
               function(response) {
-                $scope.dishes = response.data;
+                $scope.dishes = response;
                 $scope.showMenu = true;
-              },
-              function(response) {
-                $scope.message = "Error: "+response.status + " " + response.statusText;
-              }
-            );
+               },
+               function(response) {
+                 $scope.message = "Error: "+response.status + " " + response.statusText;
+            });
 
 
             $scope.select = function(setTab) {
@@ -66,7 +62,7 @@ angular.module('confusionApp')
 
                 console.log($scope.feedback);
 
-                if ($scope.feedback.agree && ($scope.feedback.mychannel == "")) {
+                if ($scope.feedback.agree && ($scope.feedback.mychannel === "")) {
                     $scope.invalidChannelSelection = true;
                     console.log('incorrect');
                 }
@@ -82,52 +78,12 @@ angular.module('confusionApp')
 
         .controller('DishDetailController', ['$scope', '$stateParams', 'menuFactory', function($scope, $stateParams, menuFactory) {
 
-          $scope.dish = {};
           $scope.showDish = false;
           $scope.message="Loading ...";
-
-          menuFactory.getDish(parseInt($stateParams.id,10))
-          .then(
+          $scope.dish = menuFactory.getDishes().get({id:parseInt($stateParams.id,10)})
+          .$promise.then(
             function(response){
-              $scope.dish = response.data;
-              $scope.showDish=true;
-            },
-            function(response) {
-              $scope.message = "Error: "+response.status + " " + response.statusText;
-            }
-          );
-
-        }])
-
-        .controller('DishCommentController', ['$scope', function($scope) {
-
-            $scope.mycomment = {rating:5, comment:"", author:"", date:""};
-
-            $scope.submitComment = function () {
-
-                $scope.mycomment.date = new Date().toISOString();
-                console.log($scope.mycomment);
-
-                $scope.dish.comments.push($scope.mycomment);
-
-                $scope.commentForm.$setPristine();
-
-                $scope.mycomment = {rating:5, comment:"", author:"", date:""};
-            };
-        }])
-
-        // implement the IndexController and About Controller here
-        .controller('IndexController', ['$scope', '$stateParams', 'menuFactory',
-        'corporateFactory', function($scope, $stateParams, menuFactory, corporateFactory) {
-
-          $scope.dish = {};
-          $scope.showDish = false;
-          $scope.message="Loading ...";
-
-          menuFactory.getDish(0)
-          .then(
-            function(response){
-              $scope.dish = response.data;
+              $scope.dish = response;
               $scope.showDish = true;
             },
             function(response) {
@@ -135,8 +91,52 @@ angular.module('confusionApp')
             }
           );
 
-          var promotion = menuFactory.getPromotion(0);
-          $scope.promotion = promotion;
+        }])
+
+        .controller('DishCommentController', ['$scope', 'menuFactory', function($scope, menuFactory) {
+
+            $scope.newComment = {rating:5, comment:"", author:"", date:""};
+
+            $scope.submitComment = function () {
+              $scope.newComment.date = new Date().toISOString();
+              console.log($scope.newComment);
+              $scope.dish.comments.push($scope.newComment);
+
+              menuFactory.getDishes().update({id:$scope.dish.id},$scope.dish);
+              $scope.dishCommentForm.$setPristine();
+              $scope.newComment = {rating:5, comment:"", author:"", date:""};
+            };
+        }])
+
+        // implement the IndexController and About Controller here
+        .controller('IndexController', ['$scope', '$stateParams', 'menuFactory',
+        'corporateFactory', function($scope, $stateParams, menuFactory, corporateFactory) {
+
+          $scope.showDish = false;
+          $scope.message="Loading ...";
+          $scope.dish = menuFactory.getDishes().get({id:0})
+          .$promise.then(
+            function(response){
+              $scope.dish = response;
+              $scope.showDish = true;
+            },
+            function(response) {
+              $scope.message = "Error: "+response.status + " " + response.statusText;
+            }
+          );
+
+          $scope.showPromotion = false;
+          $scope.message = "Loading...";
+          $scope.promotion = menuFactory.getPromotions().get({id:0})
+          .$promise.then(
+            function(response){
+              $scope.promotion = response;
+              $scope.showPromotion = true;
+            },
+            function(response) {
+              $scope.message = "Error: "+response.status + " " + response.statusText;
+            }
+          );
 
           var exChef = corporateFactory.getLeader(3);
           $scope.exChef = exChef;
