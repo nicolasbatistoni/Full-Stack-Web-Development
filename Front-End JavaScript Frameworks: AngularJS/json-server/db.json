@@ -221,5 +221,45 @@
       "description": "Award winning three-star Michelin chef with wide International experience having worked closely with whos-who in the culinary world, he specializes in creating mouthwatering Indo-Italian fusion experiences. He says, Put together the cuisines from the two craziest cultures, and you get a winning hit! Amma Mia!"
     }
   ],
-  "feedback": []
+  "feedback": [
+    {
+      "mychannel": "Email",
+      "firstName": "Nicolás",
+      "lastName": "Batistoni",
+      "agree": true,
+      "email": "nicolas.batistoni@hotmail.com",
+      "tel": {
+        "areaCode": "02266",
+        "number": "15537817"
+      },
+      "comments": "Excellent!",
+      "id": 1
+    },
+    {
+      "mychannel": "tel",
+      "firstName": "Otra",
+      "lastName": "Prueba",
+      "agree": true,
+      "email": "email@deprueba.com",
+      "tel": {
+        "areaCode": "123",
+        "number": "12345"
+      },
+      "comments": "Funciona??",
+      "id": 2
+    },
+    {
+      "mychannel": "",
+      "firstName": "asdasd",
+      "lastName": "asdasdasd",
+      "agree": false,
+      "email": "sdasdasd@asdasd",
+      "tel": {
+        "areaCode": "asdas",
+        "number": "dasda"
+      },
+      "comments": "asdasdasd",
+      "id": 3
+    }
+  ]
 }

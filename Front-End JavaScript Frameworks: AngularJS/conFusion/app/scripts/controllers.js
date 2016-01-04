@@ -56,7 +56,7 @@ angular.module('confusionApp')
 
         }])
 
-        .controller('FeedbackController', ['$scope', function($scope) {
+        .controller('FeedbackController', ['$scope', 'feedbackFactory', function($scope, feedbackFactory) {
 
             $scope.sendFeedback = function() {
 
@@ -68,6 +68,9 @@ angular.module('confusionApp')
                 }
                 else {
                     $scope.invalidChannelSelection = false;
+                    // --- //
+                    feedbackFactory.getFeedback().save($scope.feedback);
+                    // --- //
                     $scope.feedback = {mychannel:"", firstName:"", lastName:"", agree:false, email:"" };
                     $scope.feedback.mychannel="";
                     $scope.feedbackForm.$setPristine();
@@ -138,16 +141,35 @@ angular.module('confusionApp')
             }
           );
 
-          var exChef = corporateFactory.getLeader(3);
-          $scope.exChef = exChef;
+          $scope.showLeader = false;
+          $scope.message = "Loading...";
+          $scope.exChef = corporateFactory.getLeaders().get({id:3})
+          .$promise.then(
+            function(response){
+              $scope.exChef = response;
+              $scope.showLeader = true;
+            },
+            function(response) {
+              $scope.message = "Error: "+response.status + " " + response.statusText;
+            }
+          );
 
         }])
 
         .controller('AboutController', ['$scope', '$stateParams', 'menuFactory',
         'corporateFactory', function($scope, $stateParams, menuFactory, corporateFactory) {
 
-          var leaders = corporateFactory.getLeaders();
-          $scope.leaders = leaders;
+          $scope.showLeaders = false;
+          $scope.message = "Loading...";
+          $scope.leaders = corporateFactory.getLeaders().query(
+            function(response) {
+              $scope.leaders = response;
+              $scope.showLeaders = true;
+             },
+             function(response) {
+               $scope.message = "Error: "+response.status + " " + response.statusText;
+             }
+          );
 
         }])
 ;
