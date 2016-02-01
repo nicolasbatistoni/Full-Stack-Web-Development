@@ -24,11 +24,15 @@
       <div class="item item-divider">
         Corporate leadership
       </div>
-      <div class="item item-avatar" ng-repeat="leader in leaders">
-        <img ng-src="{{baseURL+leader.image}}">
-        <h3>{{leader.name}}</h3>
-        <h4>{{leader.designation}}</h4>
-        <p>{{leader.description}}</p>
+      <div class="item" ng-repeat="leader in leaders">
+        <div class="item-avatar">
+          <img ng-src="{{baseURL+leader.image}}">
+          <h3>{{leader.name}}</h3>
+          <h4>{{leader.designation}}</h4>
+        </div>
+        <div class="item-avatar item-text-wrap">
+          <p>{{leader.description}}</p>
+        </div>
       </div>
     </div>
   </ion-content>
