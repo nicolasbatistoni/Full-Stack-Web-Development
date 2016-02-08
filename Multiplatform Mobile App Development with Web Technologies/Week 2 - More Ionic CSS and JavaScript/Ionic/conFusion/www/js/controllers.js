@@ -157,12 +157,14 @@ angular.module('conFusion.controllers', ['conFusion.services'])
             };
         }])
 
-        .controller('DishDetailController', ['$scope', '$stateParams', 'menuFactory', 'baseURL', function($scope, $stateParams, menuFactory, baseURL) {
+        .controller('DishDetailController', ['$scope', '$stateParams', 'menuFactory', 'baseURL', '$ionicPopover', 'favoriteFactory', '$ionicModal', '$timeout',
+          function($scope, $stateParams, menuFactory, baseURL, $ionicPopover, favoriteFactory, $ionicModal, $timeout) {
 
             $scope.baseURL = baseURL;
             $scope.dish = {};
             $scope.showDish = false;
             $scope.message="Loading ...";
+            $scope.comment = {};
 
             $scope.dish = menuFactory.getDishes().get({id:parseInt($stateParams.id,10)})
             .$promise.then(
@@ -175,6 +177,69 @@ angular.module('conFusion.controllers', ['conFusion.services'])
                             }
             );
 
+            $scope.addFavorite = function () {
+              console.log("index is " + $scope.dish.id);
+              favoriteFactory.addToFavorites($scope.dish.id);
+              $scope.closePopover();
+            };
+
+            // .fromTemplateUrl() method
+            $ionicPopover.fromTemplateUrl('templates/dish-detail-popover.html', {
+              scope: $scope
+            }).then(function(popover) {
+              $scope.popover = popover;
+            });
+
+
+            $scope.openPopover = function($event) {
+              $scope.popover.show($event);
+            };
+            $scope.closePopover = function() {
+              $scope.popover.hide();
+            };
+            //Cleanup the popover when we're done with it!
+            $scope.$on('$destroy', function() {
+              $scope.popover.remove();
+            });
+            // Execute action on hide popover
+            $scope.$on('popover.hidden', function() {
+              // Execute action
+            });
+            // Execute action on remove popover
+            $scope.$on('popover.removed', function() {
+              // Execute action
+            });
+
+            // Create the comment modal that we will use later
+            $ionicModal.fromTemplateUrl('templates/dish-comment.html', {
+              scope: $scope
+            }).then(function(modal) {
+              $scope.commentForm = modal;
+            });
+
+            // Triggered in the comment modal to close it
+            $scope.closeComment = function() {
+              $scope.commentForm.hide();
+            };
+
+            // Open the comment modal
+            $scope.openComment = function() {
+              $scope.commentForm.show();
+              $scope.closePopover();
+            };
+
+            // Perform the comment action when the user submits the comment form
+            $scope.doComment = function() {
+              $scope.comment.date = Date.now();
+              console.log('Doing comment', $scope.comment);
+              $scope.dish.comments.push($scope.comment);
+              $scope.comment = {};
+              // Simulate a reservation delay. Remove this and replace with your comment
+              // code if using a server system
+              $timeout(function() {
+                $scope.closeComment();
+              }, 1000);
+            };
 
         }])
 
@@ -188,7 +253,7 @@ angular.module('conFusion.controllers', ['conFusion.services'])
                 console.log($scope.mycomment);
 
                 $scope.dish.comments.push($scope.mycomment);
-        menuFactory.getDishes().update({id:$scope.dish.id},$scope.dish);
+                menuFactory.getDishes().update({id:$scope.dish.id},$scope.dish);
 
                 $scope.commentForm.$setPristine();
 
