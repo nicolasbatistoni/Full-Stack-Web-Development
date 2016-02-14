@@ -2,7 +2,7 @@
 
 angular.module('conFusion.controllers', ['conFusion.services'])
 
-  .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+  .controller('AppCtrl', function ($scope, $ionicModal, $timeout, $localStorage) {
 
       // With the new view caching in Ionic, Controllers are only called
       // when they are recreated or on app start, instead of every page change.
@@ -12,7 +12,7 @@ angular.module('conFusion.controllers', ['conFusion.services'])
       //});
 
       // Form data for the login modal
-      $scope.loginData = {};
+      $scope.loginData = $localStorage.getObject('userinfo','{}');
 
       // Create the login modal that we will use later
       $ionicModal.fromTemplateUrl('templates/login.html', {
@@ -32,14 +32,15 @@ angular.module('conFusion.controllers', ['conFusion.services'])
       };
 
       // Perform the login action when the user submits the login form
-      $scope.doLogin = function() {
-      console.log('Doing login', $scope.loginData);
+      $scope.doLogin = function () {
+        console.log('Doing login', $scope.loginData);
+        $localStorage.storeObject('userinfo',$scope.loginData);
 
-      // Simulate a login delay. Remove this and replace with your login
-      // code if using a login system
-      $timeout(function() {
-      $scope.closeLogin();
-      }, 1000);
+        // Simulate a login delay. Remove this and replace with your login
+        // code if using a login system
+        $timeout(function() {
+        $scope.closeLogin();
+        }, 1000);
       };
 
       // Create the reserve modal that we will use later
@@ -309,25 +310,7 @@ angular.module('conFusion.controllers', ['conFusion.services'])
 
                 $scope.dishes = dishes;
 
-            $ionicLoading.show({
-                template: '<ion-spinner></ion-spinner> Loading...'
-            });
 
-            $scope.favorites = favoriteFactory.getFavorites();
-
-            $scope.dishes = menuFactory.query(
-                function (response) {
-                    $scope.dishes = response;
-                    $timeout(function () {
-                        $ionicLoading.hide();
-                    }, 1000);
-                },
-                function (response) {
-                    $scope.message = "Error: " + response.status + " " + response.statusText;
-                    $timeout(function () {
-                        $ionicLoading.hide();
-                    }, 1000);
-                });
                 console.log($scope.dishes, $scope.favorites);
 
                 $scope.toggleDelete = function () {
