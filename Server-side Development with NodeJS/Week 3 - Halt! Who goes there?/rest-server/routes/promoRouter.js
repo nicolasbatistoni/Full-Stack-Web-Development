@@ -1,46 +1,78 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 
-var promoRouter = express.Router();
+var promotionRouter = express.Router();
 
-module.exports = promoRouter;
+var Promotions = require('../models/promotions');
 
-promoRouter.use(bodyParser.json());
+module.exports = promotionRouter;
+promotionRouter.use(bodyParser.json());
 
-promoRouter.route('/')
-.all(function(req,res,next) {
-      res.writeHead(200, { 'Content-Type': 'text/plain' });
-      next();
-})
+promotionRouter.route('/')
 
 .get(function(req,res,next){
-        res.end('Will send all the promos to you!');
+
+  Promotions.find({}, function (err, promotion) {
+    if (err) throw err;
+    res.json(promotion);
+  });
+
 })
 
 .post(function(req, res, next){
-    res.end('Will add the promo: ' + req.body.name + ' with details: ' + req.body.description);
+
+  Promotions.create(req.body, function (err, promotion) {
+    if (err) throw err;
+    console.log('Promotion created!');
+    var id = promotion._id;
+
+    res.writeHead(200, {
+      'Content-Type': 'text/plain'
+    });
+    res.end('Added the promotion with id: ' + id);
+  });
+
 })
 
 .delete(function(req, res, next){
-        res.end('Deleting all promos');
+
+  Promotions.remove({}, function (err, resp) {
+    if (err) throw err;
+    res.json(resp);
+  });
+
 });
 
-promoRouter.route('/:id')
-.all(function(req,res,next) {
-      res.writeHead(200, { 'Content-Type': 'text/plain' });
-      next();
-})
+promotionRouter.route('/:promotionId')
 
 .get(function(req,res,next){
-        res.end('Will send details of the promo: ' + req.params.id +' to you!');
+
+  Promotions.findById(req.params.promotionId, function (err, promotion) {
+    if (err) throw err;
+    res.json(promotion);
+  });
+
 })
 
 .put(function(req, res, next){
-        res.write('Updating the promo: ' + req.params.id + '\n');
-    res.end('Will update the promo: ' + req.body.name +
-            ' with details: ' + req.body.description);
+
+  Promotions.findByIdAndUpdate(req.params.promotionId, {
+      $set: req.body
+    }, {
+      new: true
+    }, function (err, promotion) {
+      if (err) throw err;
+      res.json(promotion);
+  });
+
 })
 
 .delete(function(req, res, next){
-        res.end('Deleting promo: ' + req.params.id);
+
+  Promotions.findByIdAndRemove(req.params.promotionId, function (err, resp) {
+    if (err) throw err;
+    res.json(resp);
+  });
+
 });
