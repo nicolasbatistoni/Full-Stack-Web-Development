@@ -18,7 +18,7 @@
 9 verbose stack     at maybeClose (internal/child_process.js:827:16)
 9 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:211:5)
 10 verbose pkgid rest-server@0.0.0
-11 verbose cwd /home/lubuntu/Documentos/dev/Full-Stack-Web-Development/Server-side Development with NodeJS/Week 3 - Halt! Who goes there?/rest-server-passport
+11 verbose cwd /home/lubuntu/Documentos/dev/Full-Stack-Web-Development/Server-side Development with NodeJS/Week 4 - Backend as a Service (BaaS)/rest-server-passport
 12 error Linux 4.2.0-34-generic
 13 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "start"
 14 error node v4.4.1
